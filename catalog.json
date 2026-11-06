@@ -1,0 +1,192 @@
+{
+  "serial": 1,
+  "issued": "2026-11-06T22:23:15Z",
+  "purposes": [
+    {
+      "id": "shop",
+      "name": "Online-Shop",
+      "description": "Produkte verkaufen, Warenkorb, Kasse, Zahlungsarten"
+    },
+    {
+      "id": "blog",
+      "name": "Blog / Website",
+      "description": "Beiträge, Seiten, Magazin – schnell gepflegt"
+    },
+    {
+      "id": "cms",
+      "name": "CMS / Unternehmenswebsite",
+      "description": "Große oder mehrsprachige Websites mit Rollen und Freigaben"
+    }
+  ],
+  "apps": [
+    {
+      "id": "drupal-11",
+      "name": "Drupal 11",
+      "purpose": "cms",
+      "description": "Flexibles CMS für große, mehrsprachige Portale.",
+      "needs": "256 MB PHP-Speicher, etwa 350 MB Platz",
+      "duration": "etwa 4 Minuten",
+      "installable": true,
+      "source": {
+        "type": "packagist",
+        "package": "drupal/recommended-project"
+      },
+      "trusted_hosts": [
+        "repo.packagist.org",
+        "getcomposer.org"
+      ],
+      "released": [
+        "11"
+      ],
+      "known": [
+        "12"
+      ],
+      "php_min": "8.3",
+      "php_max": "8.5",
+      "tested": {
+        "version": "11.4.11",
+        "at": "2026-11-06",
+        "by": "itratos"
+      }
+    },
+    {
+      "id": "joomla-6",
+      "name": "Joomla 6",
+      "purpose": "cms",
+      "description": "CMS für kleine und mittlere Websites, Vereine und Verbände.",
+      "needs": "256 MB PHP-Speicher, etwa 120 MB Platz",
+      "duration": "etwa 2 Minuten",
+      "installable": true,
+      "source": {
+        "type": "github",
+        "package": "joomla/joomla-cms"
+      },
+      "trusted_hosts": [
+        "api.github.com",
+        "github.com",
+        "release-assets.githubusercontent.com",
+        "objects.githubusercontent.com",
+        "update.joomla.org",
+        "downloads.joomla.org"
+      ],
+      "released": [
+        "6"
+      ],
+      "php_min": "8.3",
+      "php_max": "8.5",
+      "tested": {
+        "version": "6.2.0",
+        "at": "2026-11-06",
+        "by": "itratos"
+      }
+    },
+    {
+      "id": "jtl-shop-5",
+      "name": "JTL-Shop 5",
+      "purpose": "shop",
+      "description": "Shop mit JTL-Wawi-Anbindung (Warenwirtschaft, Abgleich über dbeS).",
+      "needs": "eigene Domain mit HTTPS, JTL-Wawi",
+      "duration": "etwa 5 Minuten",
+      "installable": false,
+      "note": "wird unter „Shop einrichten“ als Live-Shop installiert",
+      "source": {
+        "type": "jtl"
+      },
+      "trusted_hosts": [],
+      "released": [
+        "5"
+      ],
+      "php_min": "8.2",
+      "php_max": "8.5",
+      "tested": {
+        "version": "5.8.3",
+        "at": "2026-11-04",
+        "by": "itratos"
+      }
+    },
+    {
+      "id": "shopware-6",
+      "name": "Shopware 6",
+      "purpose": "shop",
+      "description": "Moderner Shop auf Symfony-Basis, viele Erweiterungen im Shopware Store.",
+      "needs": "512 MB PHP-Speicher, etwa 400 MB Platz",
+      "duration": "etwa 3 Minuten",
+      "installable": true,
+      "source": {
+        "type": "packagist",
+        "package": "shopware/production"
+      },
+      "trusted_hosts": [
+        "repo.packagist.org",
+        "getcomposer.org"
+      ],
+      "released": [
+        "6.7"
+      ],
+      "min": "6.7.6",
+      "php_min": "8.2",
+      "php_max": "8.5",
+      "tested": {
+        "version": "6.7.16.0",
+        "at": "2026-11-06",
+        "by": "itratos"
+      }
+    },
+    {
+      "id": "typo3-14",
+      "name": "TYPO3 14",
+      "purpose": "cms",
+      "description": "Enterprise-CMS, verbreitet bei deutschen Unternehmen und Agenturen.",
+      "needs": "256 MB PHP-Speicher, etwa 300 MB Platz",
+      "duration": "etwa 3 Minuten",
+      "installable": true,
+      "source": {
+        "type": "packagist",
+        "package": "typo3/cms-base-distribution"
+      },
+      "trusted_hosts": [
+        "repo.packagist.org",
+        "getcomposer.org"
+      ],
+      "released": [
+        "14"
+      ],
+      "known": [
+        "15"
+      ],
+      "php_min": "8.2",
+      "php_max": "8.5",
+      "tested": {
+        "version": "14.3.0",
+        "at": "2026-11-06",
+        "by": "itratos"
+      }
+    },
+    {
+      "id": "wordpress-7",
+      "name": "WordPress",
+      "purpose": "blog",
+      "description": "Das verbreitetste System für Blogs und kleinere Websites, deutsch.",
+      "needs": "256 MB PHP-Speicher, etwa 100 MB Platz",
+      "duration": "etwa 1 Minute",
+      "installable": true,
+      "source": {
+        "type": "wordpress"
+      },
+      "trusted_hosts": [
+        "api.wordpress.org",
+        "downloads.wordpress.org"
+      ],
+      "released": [
+        "7"
+      ],
+      "php_min": "7.4",
+      "php_max": "8.5",
+      "tested": {
+        "version": "7.1.4",
+        "at": "2026-11-06",
+        "by": "itratos"
+      }
+    }
+  ]
+}
