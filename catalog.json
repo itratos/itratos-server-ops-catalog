@@ -1,6 +1,6 @@
 {
-  "serial": 2,
-  "issued": "2026-11-07T08:08:50Z",
+  "serial": 4,
+  "issued": "2026-11-07T08:22:37Z",
   "purposes": [
     {
       "id": "shop",
@@ -101,6 +101,37 @@
       "tested": {
         "version": "5.8.3",
         "at": "2026-11-04",
+        "by": "itratos"
+      }
+    },
+    {
+      "id": "oxid-7",
+      "name": "OXID eShop 7",
+      "purpose": "shop",
+      "description": "Shopsystem aus Deutschland, Community Edition, verbreitet im B2C- und B2B-Handel.",
+      "needs": "512 MB PHP-Speicher, etwa 300 MB Platz",
+      "duration": "etwa 3 Minuten",
+      "installable": true,
+      "source": {
+        "type": "packagist",
+        "package": "oxid-esales/oxideshop-project"
+      },
+      "trusted_hosts": [
+        "repo.packagist.org",
+        "getcomposer.org"
+      ],
+      "released": [
+        "7.5"
+      ],
+      "known": [
+        "7.6",
+        "8"
+      ],
+      "php_min": "8.3",
+      "php_max": "8.5",
+      "tested": {
+        "version": "7.5.2",
+        "at": "2026-11-07",
         "by": "itratos"
       }
     },
