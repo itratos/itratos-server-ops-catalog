@@ -1,6 +1,6 @@
 {
-  "serial": 5,
-  "issued": "2026-11-07T08:57:11Z",
+  "serial": 7,
+  "issued": "2026-11-07T09:58:48Z",
   "purposes": [
     {
       "id": "shop",
@@ -222,24 +222,23 @@
   ],
   "measures": [
     {
-      "id": "phpunit-eval-stdin",
-      "title": "PHPUnit eval-stdin.php (CVE-2017-9841)",
-      "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2017-9841",
-      "summary": "Über eine mitgelieferte Testdatei von PHPUnit kann ein Angreifer beliebigen PHP-Code ausführen, wenn der vendor-Ordner aus dem Web erreichbar ist. Wird bis heute massenhaft gegen Shops gescannt. Die Regel sperrt nur diesen einen Pfad.",
-      "type": "apache-deny",
-      "match": {
-        "path": "/vendor/phpunit/.*eval-stdin\\.php$"
-      },
-      "must_block": [
-        {
-          "method": "GET",
-          "target": "/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php"
-        },
-        {
-          "method": "POST",
-          "target": "/vendor/phpunit/phpunit/Util/PHP/eval-stdin.php"
-        }
+      "id": "php-session-upload-progress",
+      "title": "PHP2Shell und Folgelücke: Session-Upload-Progress aus",
+      "advisory": "https://github.com/NCSC-NL/php2shell",
+      "summary": "PHP2Shell (CVE-2026-109618, CVE-2026-109619, Oktober 2026) erlaubt Codeausführung ohne Anmeldung; geschlossen wird es nur durch das gepatchte PHP-Paket. Die Folgelücke CVE-2026-115560 steckt in „session upload progress“ und betrifft auch gepatchte Versionen bis zum nächsten PHP-Release. PHP empfiehlt bis dahin session.upload_progress.enabled=0 und einen Neustart der PHP-Prozesse. Nachteil nur für serverseitige Upload-Fortschrittsbalken, die $_SESSION lesen; JavaScript-Fortschrittsanzeigen funktionieren weiter. Eine Apache-Regel hilft hier nicht, weil der Angriff im Inhalt der Anfrage steckt.",
+      "type": "php-ini",
+      "cves": [
+        "CVE-2026-109618",
+        "CVE-2026-109619",
+        "CVE-2026-115560"
       ],
+      "match": {
+        "path": ""
+      },
+      "php_ini": {
+        "session.upload_progress.enabled": "0"
+      },
+      "must_block": null,
       "must_pass": [
         {
           "method": "GET",
@@ -250,7 +249,7 @@
           "target": "/robots.txt"
         }
       ],
-      "review": "2027-05-01"
+      "review": "2027-01-31"
     }
   ]
 }
