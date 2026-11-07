@@ -1,6 +1,6 @@
 {
-  "serial": 4,
-  "issued": "2026-11-07T08:22:37Z",
+  "serial": 5,
+  "issued": "2026-11-07T08:57:11Z",
   "purposes": [
     {
       "id": "shop",
@@ -218,6 +218,39 @@
         "at": "2026-11-06",
         "by": "itratos"
       }
+    }
+  ],
+  "measures": [
+    {
+      "id": "phpunit-eval-stdin",
+      "title": "PHPUnit eval-stdin.php (CVE-2017-9841)",
+      "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2017-9841",
+      "summary": "Über eine mitgelieferte Testdatei von PHPUnit kann ein Angreifer beliebigen PHP-Code ausführen, wenn der vendor-Ordner aus dem Web erreichbar ist. Wird bis heute massenhaft gegen Shops gescannt. Die Regel sperrt nur diesen einen Pfad.",
+      "type": "apache-deny",
+      "match": {
+        "path": "/vendor/phpunit/.*eval-stdin\\.php$"
+      },
+      "must_block": [
+        {
+          "method": "GET",
+          "target": "/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php"
+        },
+        {
+          "method": "POST",
+          "target": "/vendor/phpunit/phpunit/Util/PHP/eval-stdin.php"
+        }
+      ],
+      "must_pass": [
+        {
+          "method": "GET",
+          "target": "/"
+        },
+        {
+          "method": "GET",
+          "target": "/robots.txt"
+        }
+      ],
+      "review": "2027-05-01"
     }
   ]
 }
