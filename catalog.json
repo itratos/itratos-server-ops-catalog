@@ -1,6 +1,6 @@
 {
-  "serial": 7,
-  "issued": "2026-11-07T09:58:48Z",
+  "serial": 8,
+  "issued": "2026-11-07T11:09:19Z",
   "purposes": [
     {
       "id": "shop",
@@ -88,7 +88,7 @@
       "needs": "eigene Domain mit HTTPS, JTL-Wawi",
       "duration": "etwa 5 Minuten",
       "installable": false,
-      "note": "wird unter „JTL-Shop einrichten“ als Live-Shop installiert",
+      "note": "eigenes Formular: Domain, HTTPS und /admin-Schutz",
       "source": {
         "type": "jtl"
       },
