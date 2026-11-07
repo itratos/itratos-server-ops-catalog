@@ -1,6 +1,6 @@
 {
-  "serial": 8,
-  "issued": "2026-11-07T11:09:19Z",
+  "serial": 9,
+  "issued": "2026-11-07T11:23:10Z",
   "purposes": [
     {
       "id": "shop",
@@ -20,8 +20,8 @@
   ],
   "apps": [
     {
-      "id": "drupal-11",
-      "name": "Drupal 11",
+      "id": "drupal",
+      "name": "Drupal",
       "purpose": "cms",
       "description": "Flexibles CMS für große, mehrsprachige Portale.",
       "needs": "256 MB PHP-Speicher, etwa 350 MB Platz",
@@ -50,8 +50,8 @@
       }
     },
     {
-      "id": "joomla-6",
-      "name": "Joomla 6",
+      "id": "joomla",
+      "name": "Joomla",
       "purpose": "cms",
       "description": "CMS für kleine und mittlere Websites, Vereine und Verbände.",
       "needs": "256 MB PHP-Speicher, etwa 120 MB Platz",
@@ -81,8 +81,8 @@
       }
     },
     {
-      "id": "jtl-shop-5",
-      "name": "JTL-Shop 5",
+      "id": "jtl-shop",
+      "name": "JTL-Shop",
       "purpose": "shop",
       "description": "Shop mit JTL-Wawi-Anbindung (Warenwirtschaft, Abgleich über dbeS).",
       "needs": "eigene Domain mit HTTPS, JTL-Wawi",
@@ -105,8 +105,8 @@
       }
     },
     {
-      "id": "oxid-7",
-      "name": "OXID eShop 7",
+      "id": "oxid",
+      "name": "OXID eShop",
       "purpose": "shop",
       "description": "Shopsystem aus Deutschland, Community Edition, verbreitet im B2C- und B2B-Handel.",
       "needs": "512 MB PHP-Speicher, etwa 300 MB Platz",
@@ -136,8 +136,8 @@
       }
     },
     {
-      "id": "shopware-6",
-      "name": "Shopware 6",
+      "id": "shopware",
+      "name": "Shopware",
       "purpose": "shop",
       "description": "Moderner Shop auf Symfony-Basis, viele Erweiterungen im Shopware Store.",
       "needs": "512 MB PHP-Speicher, etwa 400 MB Platz",
@@ -164,8 +164,8 @@
       }
     },
     {
-      "id": "typo3-14",
-      "name": "TYPO3 14",
+      "id": "typo3",
+      "name": "TYPO3",
       "purpose": "cms",
       "description": "Enterprise-CMS, verbreitet bei deutschen Unternehmen und Agenturen.",
       "needs": "256 MB PHP-Speicher, etwa 300 MB Platz",
@@ -194,7 +194,7 @@
       }
     },
     {
-      "id": "wordpress-7",
+      "id": "wordpress",
       "name": "WordPress",
       "purpose": "blog",
       "description": "Das verbreitetste System für Blogs und kleinere Websites, deutsch.",
