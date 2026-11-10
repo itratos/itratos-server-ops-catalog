@@ -1,6 +1,6 @@
 {
-  "serial": 9,
-  "issued": "2026-11-07T11:23:10Z",
+  "serial": 10,
+  "issued": "2026-11-10T20:34:25Z",
   "purposes": [
     {
       "id": "shop",
@@ -251,5 +251,239 @@
       ],
       "review": "2027-01-31"
     }
+  ],
+  "advisories": [
+    {
+      "id": "CVE-2026-54390",
+      "app": "jtl-shop",
+      "title": "Unauthentifizierte Smarty Template Injection (SSTI) mit RCE ab 5.4.0",
+      "severity": "critical",
+      "score": 9.8,
+      "affected": [
+        "\u003e=5.2.0 \u003c5.5.4",
+        "\u003e=5.6.0 \u003c5.6.2",
+        "\u003e=5.7.0 \u003c5.7.2"
+      ],
+      "fixed_in": [
+        "5.5.4",
+        "5.6.2",
+        "5.7.2"
+      ],
+      "note": "Für ältere 5.x-Zweige stellt JTL einen Back-Patch bereit; ein eingespielter Back-Patch wird anhand des Smarty-Mail-Renderers erkannt. Nach dem Patch Blowfish-Key, DB-Passwort und alle im Shop hinterlegten Zugangsdaten rotieren, da diese vor dem Patch auslesbar waren.",
+      "reference": "https://sansec.io/research/jtl-shop-ssti-rce",
+      "published": "2026-06-17",
+      "source": "https://nvd.nist.gov/vuln/detail/CVE-2026-54390",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "markers": [
+        {
+          "file": "includes/src/Mail/Renderer/SmartyRenderer.php",
+          "fixed": "\\{ldelim\\}",
+          "vulnerable": "\\$replace\\[\\]\\s*=\\s*\\$value\\s*;",
+          "what": "Maskierung von Smarty-Syntax in Platzhaltern des Mail-Renderers"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-103904",
+      "app": "jtl-shop",
+      "title": "Unauthentifiziertes gespeichertes XSS in der Consent-Statistik (Backend-Übernahme)",
+      "severity": "critical",
+      "score": 9.3,
+      "affected": [
+        "\u003e=5.4.0 \u003c5.6.5",
+        "\u003e=5.7.0 \u003c5.7.5",
+        "\u003e=5.8.0 \u003c5.8.2"
+      ],
+      "fixed_in": [
+        "5.6.5",
+        "5.7.5",
+        "5.8.2"
+      ],
+      "note": "Über /_updateconsent lassen sich ohne Anmeldung beliebige Einwilligungs-Namen in consent_statistics speichern; beim Öffnen von Statistiken → Consent-Manager (/admin/stats/6) läuft der Code mit den Rechten des Administrators. Für 5.4/5.5 gibt es keinen Patch (Upgrade auf 5.6.5+). JTL stellt Patch-Dateien bereit; deren Einspielung wird anhand von statistik.tpl und Consent/Manager.php erkannt. Bis zum Update die Consent-Statistik nicht öffnen bzw. das Recht STATS_CONSENT_VIEW entziehen;",
+      "reference": "https://www.jtl-software.com/de/security/sicherheitsluecke-shop-xss/",
+      "published": "2026-10-14",
+      "source": "JTL Security Advisory (Code-Diff 5.8.1 → 5.8.2 verifiziert)",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "requires": "includes/src/Consent/Statistics/Repositories/ConsentStatisticsRepository.php",
+      "markers": [
+        {
+          "file": "admin/templates/bootstrap/statistik.tpl",
+          "fixed": "\\$oStat-\u003e\\$cMemberVar\\s*\\|\\s*escape",
+          "vulnerable": "\\{\\$oStat-\u003e\\$cMemberVar\\}",
+          "what": "Ausgabe der Consent-Namen in der Statistik"
+        },
+        {
+          "file": "includes/src/Consent/Manager.php",
+          "fixed": "getActiveItemIDs",
+          "vulnerable": "function\\s+getConsentsFromData",
+          "what": "Prüfung der Einwilligungs-Namen beim Speichern"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-103905",
+      "app": "jtl-shop",
+      "title": "Unauthentifiziertes Umschalten des Wartungsmodus (Safe-Mode)",
+      "severity": "critical",
+      "score": 7.5,
+      "affected": [
+        "\u003e=5.3.0 \u003c5.6.5",
+        "\u003e=5.7.0 \u003c5.7.5",
+        "\u003e=5.8.0 \u003c5.8.2"
+      ],
+      "fixed_in": [
+        "5.6.5",
+        "5.7.5",
+        "5.8.2"
+      ],
+      "note": "Ein Aufruf von /admin/logout?safemode=… schaltet den Shop ohne Anmeldung in den Wartungsmodus (auch über eingebettete Ressourcen auf fremden Seiten). Kein Datenzugriff, aber Shop-Ausfall. Für 5.3–5.5 gibt es keinen Patch (Upgrade auf 5.6.5+). Ein eingespielter Patch wird an der Reihenfolge in AuthMiddleware.php erkannt.",
+      "reference": "https://www.jtl-software.com/de/security/shop-maintenance-mode",
+      "published": "2026-10-14",
+      "source": "JTL Security Advisory (Code-Diff 5.8.1 → 5.8.2 verifiziert)",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "order": {
+        "file": "includes/src/Router/Middleware/AuthMiddleware.php",
+        "first": "-\u003eisValid()",
+        "second": "plgSafeMode",
+        "what": "Wartungsmodus wird erst nach der Anmeldeprüfung umgeschaltet"
+      }
+    },
+    {
+      "id": "JTL-2026-PATH-TRAVERSAL",
+      "app": "jtl-shop",
+      "title": "Path Traversal: Dateien löschen (Banner/ImageMap) und schreiben (Wawi-Bildabgleich)",
+      "severity": "warning",
+      "affected": [
+        "\u003e=5.0.0 \u003c5.6.5",
+        "\u003e=5.7.0 \u003c5.7.5",
+        "\u003e=5.8.0 \u003c5.8.2"
+      ],
+      "fixed_in": [
+        "5.6.5",
+        "5.7.5",
+        "5.8.2"
+      ],
+      "note": "Zwei Lücken, die Backend- bzw. Wawi-Sync-Zugang voraussetzen: Banner- und ImageMap-Verwaltung löschen Dateien ohne Pfadprüfung (ab 5.6.0), der dbeS-Bildabgleich übernimmt Dateinamen mit ../ ungeprüft (ab 5.0.0). Mit gestohlenen Admin- oder Sync-Zugangsdaten lassen sich so Dateien außerhalb der Bildverzeichnisse löschen bzw. ablegen.",
+      "reference": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-2.249343/",
+      "published": "2026-10-14",
+      "source": "JTL-Forum (Release 5.8.2), Code-Diff 5.8.1 → 5.8.2",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "markers": [
+        {
+          "file": "includes/src/dbeS/Sync/ImageUpload.php",
+          "fixed": "hasTraversal",
+          "vulnerable": "'cPfad'\\s*=\u003e\\s*\\(string\\)\\s*\\$child-\u003eattributes\\(\\)-\u003ecHash",
+          "what": "Pfadprüfung im Wawi-Bildabgleich"
+        },
+        {
+          "file": "includes/src/ImageMap.php",
+          "fixed": "realpath\\(\\s*\\\\?PFAD_ROOT\\s*\\.\\s*\\\\?PFAD_BILDER_BANNER\\s*\\)",
+          "vulnerable": "unlink\\(\\s*\\\\?PFAD_ROOT\\s*\\.\\s*\\\\?PFAD_BILDER_BANNER\\s*\\.\\s*\\$bannerData",
+          "what": "Pfadprüfung beim Löschen von ImageMaps"
+        },
+        {
+          "file": "includes/src/Router/Controller/Backend/BannerController.php",
+          "fixed": "deleteBannerFile",
+          "vulnerable": "unlink\\(\\s*\\\\?PFAD_ROOT\\s*\\.\\s*\\\\?PFAD_BILDER_BANNER\\s*\\.\\s*\\$bannerPath",
+          "what": "Pfadprüfung beim Ersetzen von Bannern"
+        }
+      ]
+    },
+    {
+      "id": "JTL-SHOP-9886",
+      "app": "jtl-shop",
+      "title": "IDOR im Retouren-Modul: Lieferadressen aller Kunden auslesbar",
+      "severity": "critical",
+      "score": 6.5,
+      "affected": [
+        "\u003e=5.3.0 \u003c5.6.4",
+        "\u003e=5.7.0 \u003c5.7.4",
+        "\u003e=5.8.0 \u003c5.8.1"
+      ],
+      "fixed_in": [
+        "5.6.4",
+        "5.7.4",
+        "5.8.1"
+      ],
+      "note": "Jeder angemeldete Kunde kann über die IO-Methode rmaSummary (Parameter returnAddress) fortlaufende IDs aus tlieferadressevorlage abfragen. Das Abschalten der Retouren hilft nicht. Für 5.3–5.5 gibt es nur einen manuellen Patch; dessen Einspielung wird an RMAReturnAddressService.php erkannt. Datenschutzrechtlich (DSGVO Art. 33) prüfen, ob eine Meldung nötig ist.",
+      "reference": "https://www.jtl-software.com/de/advisory-shop-security-bola-idor-shop-9886/",
+      "published": "2026-09-24",
+      "source": "JTL Security Advisory (Code-Diff 5.8.0 → 5.8.1 verifiziert)",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "markers": [
+        {
+          "file": "includes/src/RMA/Services/RMAReturnAddressService.php",
+          "fixed": "returnAddressFromDeliveryAddressTemplateID\\s*\\([^)]*\\$customerID",
+          "vulnerable": "returnAddressFromDeliveryAddressTemplateID\\s*\\(\\s*int\\s+\\$deliveryAddressTemplateID\\s*\\)",
+          "what": "Besitzprüfung der Rücksendeadresse"
+        }
+      ]
+    },
+    {
+      "id": "JTL-2026-PWRESET-XSS",
+      "app": "jtl-shop",
+      "title": "Reflected XSS in „Passwort vergessen“",
+      "severity": "warning",
+      "affected": [
+        "\u003e=5.3.0 \u003c5.6.4",
+        "\u003e=5.7.0 \u003c5.7.4",
+        "\u003e=5.8.0 \u003c5.8.1"
+      ],
+      "fixed_in": [
+        "5.6.4",
+        "5.7.4",
+        "5.8.1"
+      ],
+      "note": "Die eingegebene E-Mail-Adresse wurde ungefiltert in die Erfolgs-/Fehlermeldung übernommen. Gemeinsam mit JTL-SHOP-9886 behoben.",
+      "reference": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-2.249343/",
+      "published": "2026-09-24",
+      "source": "JTL-Forum (Release 5.8.1), Code-Diff 5.8.0 → 5.8.1",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "markers": [
+        {
+          "file": "includes/src/Router/Controller/ForgotPasswordController.php",
+          "fixed": "(\\$email\\s*=\\s*Text::filterXSS\\(|filterXSS\\(\\$email\\))",
+          "vulnerable": "(\\$email\\s*=\\s*\\$requestData\\['email'\\]\\s*;|'forgot password'\\s*\\)\\s*,\\s*\\$email\\s*\\))",
+          "what": "Filterung der E-Mail-Adresse in der Meldung"
+        }
+      ]
+    },
+    {
+      "id": "JTL-2026-ADMIN-XSS",
+      "app": "jtl-shop",
+      "title": "XSS in zwei Backend-Funktionen (Bewertungen, Freischaltungen)",
+      "severity": "critical",
+      "affected": [
+        "\u003e=5.0.0 \u003c5.6.3",
+        "\u003e=5.7.0 \u003c5.7.3"
+      ],
+      "fixed_in": [
+        "5.6.3",
+        "5.7.3",
+        "5.8.0"
+      ],
+      "note": "Werte aus Bewertungen (Name, Titel) und Suchparameter der Freischaltungen wurden im Backend ungefiltert ausgegeben; präparierte Kundenbewertungen konnten so JavaScript in der Admin-Sitzung ausführen. Versionen vor 5.6.0 erhalten keinen Fix.",
+      "reference": "https://www.jtl-software.com/de/shop-patch-xss",
+      "published": "2026-08-26",
+      "source": "JTL Security Advisory (Code-Diff 5.7.2 → 5.7.3 verifiziert)",
+      "origin": "ecom-sec daf4f58 (MIT)",
+      "markers": [
+        {
+          "file": "admin/templates/bootstrap/tpl_inc/bewertung_editieren.tpl",
+          "fixed": "htmlentities\\(\\$review-\u003egetName\\(\\)",
+          "vulnerable": "value=\"\\{\\$review-\u003egetName\\(\\)\\}\"",
+          "what": "Ausgabe von Bewertungen im Backend"
+        },
+        {
+          "file": "includes/src/Router/Controller/Backend/ActivationController.php",
+          "fixed": "filterXSS\\(\\s*Request::verifyGPDataString\\('cSuchTyp'\\)",
+          "vulnerable": "assign\\('cSuchTyp',\\s*Request::verifyGPDataString\\('cSuchTyp'\\)\\)",
+          "what": "Suchparameter der Freischaltungen"
+        }
+      ]
+    }
+  ],
+  "notices": [
+    "The JTL-Shop 5 advisories in this catalog (ids, titles, version ranges, notes and patch markers) are taken from\necom-sec, https://github.com/liohtml/ecom-sec (commit daf4f58), under the MIT License:\n\nMIT License\n\nCopyright (c) 2026 ecomsec contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE."
   ]
 }

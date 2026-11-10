@@ -12,3 +12,10 @@ catalog built into ServerOps is used instead. The signing key is kept offline by
 this repository.
 
 Public key (base64): `18rogB4cxHu5yaS1mHHOnR0xt52B/I0/N/eowz/aKik=`
+
+## Third-party data
+
+From catalog no. 10 on, the catalog also lists known vulnerabilities of JTL-Shop 5 (advisories) with version ranges
+and code markers for back-patches. These entries are taken as data from
+[ecom-sec](https://github.com/liohtml/ecom-sec) (MIT License, © 2026 ecomsec contributors); the full notice is in
+`NOTICE-ecom-sec` and inside the catalog (`notices`).
