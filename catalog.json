@@ -1,6 +1,6 @@
 {
-  "serial": 10,
-  "issued": "2026-11-10T20:34:25Z",
+  "serial": 11,
+  "issued": "2026-11-12T07:38:55Z",
   "purposes": [
     {
       "id": "shop",
@@ -485,5 +485,16 @@
   ],
   "notices": [
     "The JTL-Shop 5 advisories in this catalog (ids, titles, version ranges, notes and patch markers) are taken from\necom-sec, https://github.com/liohtml/ecom-sec (commit daf4f58), under the MIT License:\n\nMIT License\n\nCopyright (c) 2026 ecomsec contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE."
+  ],
+  "jtl_references": [
+    {
+      "version": "5.8.3",
+      "source": "shop-v5-8-2-to-v5-8-3.zip",
+      "files": {
+        "5-8-3.csv": "24eb945211f24d2e84d017fe971bad5c95c2fe4f964e58b58173be72b41f8654",
+        "dbstruct_5-8-3.json": "069d372b2eca9b0ccf9829f82078b2c2393c0c7d70aef8a1e74726d6f3a09a39",
+        "deleted_files_5-8-3.csv": "06901a7314c3e518dd05391680d8df57533da4c420ab7dd33f0bbddeb5324930"
+      }
+    }
   ]
 }
