@@ -11,6 +11,11 @@ catalog with a lower serial than one it has already seen. A changed or replayed 
 catalog built into ServerOps is used instead. The signing key is kept offline by itratos and is never part of
 this repository.
 
+From ServerOps v0.97.0 on, every installation fetches `catalog.json` and `catalog.sig` from this repository every
+6 hours (raw.githubusercontent.com, no credentials) and installs them only with a valid signature and a higher
+serial. Each commit here is therefore a release to every installation. The catalog also carries vendor warnings
+of coming security releases (ServerOps docs/69). It holds no program code and no customer data.
+
 Public key (base64): `18rogB4cxHu5yaS1mHHOnR0xt52B/I0/N/eowz/aKik=`
 
 ## Third-party data

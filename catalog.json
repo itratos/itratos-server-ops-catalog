@@ -1,6 +1,6 @@
 {
-  "serial": 11,
-  "issued": "2026-11-12T07:38:55Z",
+  "serial": 17,
+  "issued": "2026-11-20T20:37:03Z",
   "purposes": [
     {
       "id": "shop",
@@ -222,15 +222,70 @@
   ],
   "measures": [
     {
+      "id": "php-fatal-error-backtraces",
+      "title": "PHP 8.5: keine Backtraces bei fatalen Fehlern (CVE-2026-129182, CVE-2026-129474)",
+      "advisory": "https://www.php.net/ChangeLog-8.php",
+      "summary": "Zwei Lücken nur in PHP 8.5 (behoben in 8.5.13 am 19.11.2026): Beim Sammeln des Backtrace eines fatalen Fehlers kann PHP freigegebenen Speicher verwenden – beim Betreten von __call()/__callStatic() und beim Zurücksetzen von PHP-Einstellungen am Ende einer Anfrage. Folge: abstürzende PHP-Prozesse, im schlimmsten Fall Codeausführung. Bis das Ubuntu-Paket kommt, schaltet fatal_error_backtraces=0 die Backtraces ab. Nachteil: Im Fehlerprotokoll fehlt bei fatalen Fehlern der Aufrufpfad; Anfragen selbst ändern sich nicht. Nur für PHP 8.5 – auf älterem PHP schlägt die Prüfung fehl und die Einstellung wird zurückgenommen.",
+      "type": "php-ini",
+      "cves": [
+        "CVE-2026-129182",
+        "CVE-2026-129474"
+      ],
+      "match": {
+        "path": ""
+      },
+      "php_ini": {
+        "fatal_error_backtraces": "0"
+      },
+      "must_block": null,
+      "must_pass": [
+        {
+          "method": "GET",
+          "target": "/"
+        },
+        {
+          "method": "GET",
+          "target": "/robots.txt"
+        }
+      ],
+      "review": "2027-02-28"
+    },
+    {
+      "id": "php-session-strict-mode-locked",
+      "title": "PHP: Session Strict Mode fest einschalten (nicht abschaltbar)",
+      "advisory": "https://www.php.net/manual/en/session.configuration.php#ini.session.use-strict-mode",
+      "summary": "PHP nimmt dann nur Sitzungs-IDs an, die es selbst erzeugt hat (Schutz vor Session Fixation). Die PHP-Einstellungen setzen das schon, aber als php_flag – der Shop-Code oder ein Plugin könnte es per ini_set() wieder abschalten. Diese Maßnahme setzt es als php_admin_value; dann ist es für den Code nicht mehr änderbar. Keine sichtbare Änderung für Kunden, solange der Strict Mode schon an ist. Dauerhafte Härtung ohne CVE: kein Paket-Update macht sie überflüssig.",
+      "type": "php-ini",
+      "match": {
+        "path": ""
+      },
+      "php_ini": {
+        "session.use_strict_mode": "1"
+      },
+      "must_block": null,
+      "must_pass": [
+        {
+          "method": "GET",
+          "target": "/"
+        },
+        {
+          "method": "GET",
+          "target": "/robots.txt"
+        }
+      ],
+      "review": "2027-11-30"
+    },
+    {
       "id": "php-session-upload-progress",
       "title": "PHP2Shell und Folgelücke: Session-Upload-Progress aus",
       "advisory": "https://github.com/NCSC-NL/php2shell",
-      "summary": "PHP2Shell (CVE-2026-109618, CVE-2026-109619, Oktober 2026) erlaubt Codeausführung ohne Anmeldung; geschlossen wird es nur durch das gepatchte PHP-Paket. Die Folgelücke CVE-2026-115560 steckt in „session upload progress“ und betrifft auch gepatchte Versionen bis zum nächsten PHP-Release. PHP empfiehlt bis dahin session.upload_progress.enabled=0 und einen Neustart der PHP-Prozesse. Nachteil nur für serverseitige Upload-Fortschrittsbalken, die $_SESSION lesen; JavaScript-Fortschrittsanzeigen funktionieren weiter. Eine Apache-Regel hilft hier nicht, weil der Angriff im Inhalt der Anfrage steckt.",
+      "summary": "PHP2Shell (CVE-2026-109618, CVE-2026-109619, Oktober 2026) erlaubt Codeausführung ohne Anmeldung; geschlossen wird es nur durch das gepatchte PHP-Paket. Die Folgelücke CVE-2026-115560 steckt in „session upload progress“; PHP hat sie am 19.11.2026 in 8.5.13/8.4.28/8.3.37/8.2.36 behoben, das Ubuntu-Paket folgt später. Bis dahin empfiehlt PHP session.upload_progress.enabled=0; das engt auch CVE-2026-126714 (Session-Datei nicht gekürzt) ein. Nachteil nur für serverseitige Upload-Fortschrittsbalken, die $_SESSION lesen; JavaScript-Fortschrittsanzeigen funktionieren weiter. Eine Apache-Regel hilft hier nicht, weil der Angriff im Inhalt der Anfrage steckt.",
       "type": "php-ini",
       "cves": [
         "CVE-2026-109618",
         "CVE-2026-109619",
-        "CVE-2026-115560"
+        "CVE-2026-115560",
+        "CVE-2026-126714"
       ],
       "match": {
         "path": ""
@@ -495,6 +550,651 @@
         "dbstruct_5-8-3.json": "069d372b2eca9b0ccf9829f82078b2c2393c0c7d70aef8a1e74726d6f3a09a39",
         "deleted_files_5-8-3.csv": "06901a7314c3e518dd05391680d8df57533da4c420ab7dd33f0bbddeb5324930"
       }
+    }
+  ],
+  "releases": [
+    {
+      "app": "jtl-shop",
+      "hosts": [
+        "forum.jtl-software.de",
+        "www.jtl-software.com",
+        "gitlab.com",
+        "guide.jtl-software.com"
+      ],
+      "releases": [
+        {
+          "version": "5.8.4",
+          "date": "2026-11-12",
+          "security": true,
+          "fixes": "JTL: enthält mehrere Security-Fixes; zeitnahes Update empfohlen",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+            }
+          ]
+        },
+        {
+          "version": "5.8.3",
+          "date": "2026-11-04",
+          "security": true,
+          "fixes": "JTL: enthält mehrere Security-Fixes",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-3.249343/"
+            }
+          ]
+        },
+        {
+          "version": "5.8.2",
+          "date": "2026-10-14",
+          "security": true,
+          "fixes": "JTL: enthält 2 kritische Security-Fixes; behebt u. a. XSS in der Consent-Statistik (betroffen 5.4.0–5.8.1)",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-3.249343/"
+            }
+          ]
+        },
+        {
+          "version": "5.8.1",
+          "date": "2026-09-24",
+          "security": true,
+          "fixes": "JTL: enthält einen kritischen Security-Fix",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-3.249343/"
+            }
+          ]
+        },
+        {
+          "version": "5.8.0",
+          "date": "2026-08-26",
+          "security": true,
+          "fixes": "JTL: enthält einen kritischen Security-Fix",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-3.249343/"
+            }
+          ],
+          "note": "erste Version der Reihe 5.8"
+        },
+        {
+          "version": "5.7.6",
+          "date": "2026-11-11",
+          "security": true,
+          "fixes": "JTL: enthält die meisten Security-Fixes aus 5.8.4",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+            }
+          ]
+        },
+        {
+          "version": "5.7.5",
+          "date": "2026-10-14",
+          "security": true,
+          "fixes": "behebt XSS in der Consent-Statistik (betroffen 5.7.0–5.7.4)",
+          "links": [
+            {
+              "title": "JTL-Sicherheitshinweis",
+              "url": "https://www.jtl-software.com/de/security/sicherheitsluecke-shop-xss/"
+            }
+          ]
+        },
+        {
+          "version": "5.7.4",
+          "date": "2026-09-22"
+        },
+        {
+          "version": "5.7.3",
+          "date": "2026-08-26"
+        },
+        {
+          "version": "5.7.2",
+          "date": "2026-06-12",
+          "security": true,
+          "fixes": "behebt CVE-2026-54390 (Smarty-Template-Injection, betroffen 5.2.0–5.7.1)",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-7-aktuell-5-7-2.246278/"
+            }
+          ]
+        },
+        {
+          "version": "5.7.1",
+          "date": "2026-05-07"
+        },
+        {
+          "version": "5.7.0",
+          "date": "2026-03-23",
+          "note": "erste Version der Reihe 5.7"
+        },
+        {
+          "version": "5.6.6",
+          "date": "2026-11-11",
+          "security": true,
+          "fixes": "JTL: enthält die meisten Security-Fixes aus 5.8.4",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+            }
+          ]
+        },
+        {
+          "version": "5.6.5",
+          "date": "2026-10-14",
+          "security": true,
+          "fixes": "behebt XSS in der Consent-Statistik (betroffen 5.4.0–5.6.4)",
+          "links": [
+            {
+              "title": "JTL-Sicherheitshinweis",
+              "url": "https://www.jtl-software.com/de/security/sicherheitsluecke-shop-xss/"
+            }
+          ]
+        },
+        {
+          "version": "5.6.4",
+          "date": "2026-09-22"
+        },
+        {
+          "version": "5.6.3",
+          "date": "2026-08-26"
+        },
+        {
+          "version": "5.6.2",
+          "date": "2026-06-11"
+        },
+        {
+          "version": "5.6.1",
+          "date": "2025-11-07"
+        },
+        {
+          "version": "5.6.0",
+          "date": "2025-09-25",
+          "note": "erste Version der Reihe 5.6"
+        }
+      ],
+      "announcements": [
+        {
+          "id": "jtl-2026-11-24",
+          "announced": "2026-11-20",
+          "release_date": "2026-11-24",
+          "versions": [
+            "5.8.5",
+            "5.7.7",
+            "5.6.7",
+            "5.5.6"
+          ],
+          "affected": {
+            "from": "5.0.0",
+            "to": "5.8.4"
+          },
+          "severity": "high",
+          "issues": 3,
+          "source": "JTL-Newsletter vom 20.11.2026",
+          "note": "Details und Download-Links kündigt JTL für den 24.11.2026 an."
+        }
+      ]
+    },
+    {
+      "app": "shopware",
+      "hosts": [
+        "github.com"
+      ],
+      "releases": [
+        {
+          "version": "6.7.16.1",
+          "date": "2026-11-17"
+        },
+        {
+          "version": "6.7.16.0",
+          "date": "2026-10-22"
+        },
+        {
+          "version": "6.7.15.1",
+          "date": "2026-10-02"
+        },
+        {
+          "version": "6.7.15.0",
+          "date": "2026-09-30"
+        },
+        {
+          "version": "6.7.14.2",
+          "date": "2026-09-18"
+        },
+        {
+          "version": "6.7.14.1",
+          "date": "2026-09-10"
+        },
+        {
+          "version": "6.7.14.0",
+          "date": "2026-08-28"
+        },
+        {
+          "version": "6.7.13.1",
+          "date": "2026-08-17"
+        },
+        {
+          "version": "6.7.13.0",
+          "date": "2026-07-28"
+        },
+        {
+          "version": "6.7.12.2",
+          "date": "2026-07-23"
+        },
+        {
+          "version": "6.7.12.1",
+          "date": "2026-07-07"
+        },
+        {
+          "version": "6.7.11.1",
+          "date": "2026-06-17"
+        },
+        {
+          "version": "6.7.11.0",
+          "date": "2026-06-03"
+        },
+        {
+          "version": "6.7.10.2",
+          "date": "2026-05-28"
+        },
+        {
+          "version": "6.7.10.1",
+          "date": "2026-05-13",
+          "security": true,
+          "links": [
+            {
+              "title": "CVE-2026-48013",
+              "url": "https://github.com/advisories/GHSA-gq96-5pfx-f4vc"
+            },
+            {
+              "title": "CVE-2026-48015",
+              "url": "https://github.com/advisories/GHSA-xvhc-gm7j-mhmc"
+            },
+            {
+              "title": "CVE-2026-48016",
+              "url": "https://github.com/advisories/GHSA-9v5m-39wh-5chq"
+            }
+          ]
+        },
+        {
+          "version": "6.7.10.0",
+          "date": "2026-04-29"
+        },
+        {
+          "version": "6.7.9.1",
+          "date": "2026-04-24"
+        },
+        {
+          "version": "6.7.9.0",
+          "date": "2026-04-14"
+        },
+        {
+          "version": "6.7.8.2",
+          "date": "2026-03-17"
+        },
+        {
+          "version": "6.7.8.1",
+          "date": "2026-03-09",
+          "security": true,
+          "links": [
+            {
+              "title": "CVE-2026-31889",
+              "url": "https://github.com/advisories/GHSA-c4p7-rwrg-pf6p"
+            },
+            {
+              "title": "CVE-2026-31888",
+              "url": "https://github.com/advisories/GHSA-gqc5-xv7m-gcjq"
+            },
+            {
+              "title": "CVE-2026-31887",
+              "url": "https://github.com/advisories/GHSA-7vvp-j573-5584"
+            }
+          ]
+        },
+        {
+          "version": "6.7.8.0",
+          "date": "2026-02-24"
+        },
+        {
+          "version": "6.7.7.1",
+          "date": "2026-02-04"
+        },
+        {
+          "version": "6.7.7.0",
+          "date": "2026-01-23"
+        },
+        {
+          "version": "6.7.6.2",
+          "date": "2026-01-20"
+        },
+        {
+          "version": "6.7.6.1",
+          "date": "2026-01-13",
+          "security": true,
+          "links": [
+            {
+              "title": "CVE-2026-23498",
+              "url": "https://github.com/advisories/GHSA-7cw6-7h3h-v8pf"
+            }
+          ]
+        },
+        {
+          "version": "6.7.6.0",
+          "date": "2025-12-19"
+        },
+        {
+          "version": "6.7.5.1",
+          "date": "2025-12-03"
+        },
+        {
+          "version": "6.7.5.0",
+          "date": "2025-11-21"
+        },
+        {
+          "version": "6.7.4.2",
+          "date": "2025-11-13"
+        },
+        {
+          "version": "6.7.4.1",
+          "date": "2025-11-10",
+          "security": true,
+          "links": [
+            {
+              "title": "Advisory",
+              "url": "https://github.com/advisories/GHSA-2w46-vq8h-98vh"
+            }
+          ]
+        },
+        {
+          "version": "6.7.4.0",
+          "date": "2025-10-24"
+        },
+        {
+          "version": "6.7.3.1",
+          "date": "2025-10-13",
+          "security": true,
+          "links": [
+            {
+              "title": "Advisory",
+              "url": "https://github.com/advisories/GHSA-r2vg-hvjm-fg38"
+            },
+            {
+              "title": "Advisory",
+              "url": "https://github.com/advisories/GHSA-27c9-vp3w-6ww8"
+            },
+            {
+              "title": "Advisory",
+              "url": "https://github.com/advisories/GHSA-3cpp-fv95-mpr5"
+            }
+          ]
+        },
+        {
+          "version": "6.7.3.0",
+          "date": "2025-10-06"
+        },
+        {
+          "version": "6.7.2.2",
+          "date": "2025-09-13"
+        },
+        {
+          "version": "6.7.2.1",
+          "date": "2025-09-01",
+          "security": true,
+          "links": [
+            {
+              "title": "Advisory",
+              "url": "https://github.com/advisories/GHSA-9v82-vcjx-m76j"
+            }
+          ]
+        },
+        {
+          "version": "6.7.1.2",
+          "date": "2025-07-30"
+        },
+        {
+          "version": "6.7.1.1",
+          "date": "2025-07-24"
+        },
+        {
+          "version": "6.7.1.0",
+          "date": "2025-07-22"
+        },
+        {
+          "version": "6.7.0.1",
+          "date": "2025-06-30"
+        },
+        {
+          "version": "6.7.0.0",
+          "date": "2025-06-10",
+          "security": true,
+          "links": [
+            {
+              "title": "CVE-2025-32378",
+              "url": "https://github.com/advisories/GHSA-4h9w-7vfp-px8m"
+            },
+            {
+              "title": "Advisory",
+              "url": "https://github.com/advisories/GHSA-68wv-g3fw-pq7q"
+            },
+            {
+              "title": "CVE-2025-30151",
+              "url": "https://github.com/advisories/GHSA-cgfj-hj93-rmh2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "app": "wordpress",
+      "hosts": [
+        "wordpress.org"
+      ],
+      "releases": [
+        {
+          "version": "7.1.5",
+          "date": "2026-11-18",
+          "security": true,
+          "links": [
+            {
+              "title": "Release-Archiv",
+              "url": "https://wordpress.org/download/releases/"
+            }
+          ],
+          "note": "laut wordpress.org sind ältere Versionen der Reihe unsicher"
+        },
+        {
+          "version": "7.1.4",
+          "date": "2026-10-28",
+          "security": true,
+          "links": [
+            {
+              "title": "Release-Archiv",
+              "url": "https://wordpress.org/download/releases/"
+            }
+          ],
+          "note": "laut wordpress.org sind ältere Versionen der Reihe unsicher"
+        },
+        {
+          "version": "7.1.3",
+          "date": "2026-10-06"
+        },
+        {
+          "version": "7.1.2",
+          "date": "2026-09-22"
+        },
+        {
+          "version": "7.1.1",
+          "date": "2026-09-17"
+        },
+        {
+          "version": "7.0.9",
+          "date": "2026-11-18",
+          "security": true,
+          "links": [
+            {
+              "title": "Release-Archiv",
+              "url": "https://wordpress.org/download/releases/"
+            }
+          ],
+          "note": "laut wordpress.org sind ältere Versionen der Reihe unsicher"
+        },
+        {
+          "version": "7.0.8",
+          "date": "2026-10-28",
+          "security": true,
+          "links": [
+            {
+              "title": "Release-Archiv",
+              "url": "https://wordpress.org/download/releases/"
+            }
+          ],
+          "note": "laut wordpress.org sind ältere Versionen der Reihe unsicher"
+        },
+        {
+          "version": "7.0.7",
+          "date": "2026-10-06"
+        },
+        {
+          "version": "7.0.6",
+          "date": "2026-09-22"
+        },
+        {
+          "version": "7.0.5",
+          "date": "2026-09-17"
+        },
+        {
+          "version": "7.0.4",
+          "date": "2026-08-12"
+        },
+        {
+          "version": "7.0.3",
+          "date": "2026-08-06"
+        },
+        {
+          "version": "7.0.2",
+          "date": "2026-07-17"
+        },
+        {
+          "version": "7.0.1",
+          "date": "2026-07-09"
+        }
+      ]
+    }
+  ],
+  "platform": [
+    {
+      "id": "mariadb",
+      "name": "MariaDB",
+      "hosts": [
+        "mariadb.org"
+      ],
+      "link": "https://mariadb.org/about/#maintenance-policy",
+      "lines": [
+        {
+          "line": "10.6",
+          "released": "2021-07-06",
+          "supported_until": "2026-07-06",
+          "lts": true
+        },
+        {
+          "line": "10.11",
+          "released": "2023-02-16",
+          "supported_until": "2028-02-16",
+          "lts": true
+        },
+        {
+          "line": "11.4",
+          "released": "2024-05-29",
+          "supported_until": "2029-05-29",
+          "lts": true
+        },
+        {
+          "line": "11.8",
+          "released": "2025-06-04",
+          "supported_until": "2028-06-04",
+          "lts": true
+        },
+        {
+          "line": "12.3",
+          "released": "2026-05-28",
+          "supported_until": "2029-06-12",
+          "lts": true
+        }
+      ]
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "hosts": [
+        "www.php.net"
+      ],
+      "link": "https://www.php.net/supported-versions.php",
+      "lines": [
+        {
+          "line": "8.2",
+          "released": "2022-12-08",
+          "security_until": "2026-12-31",
+          "supported_until": "2024-12-31"
+        },
+        {
+          "line": "8.3",
+          "released": "2023-11-23",
+          "security_until": "2027-12-31",
+          "supported_until": "2025-12-31"
+        },
+        {
+          "line": "8.4",
+          "released": "2024-11-21",
+          "security_until": "2028-12-31",
+          "supported_until": "2026-12-31"
+        },
+        {
+          "line": "8.5",
+          "released": "2025-11-20",
+          "security_until": "2029-12-31",
+          "supported_until": "2027-12-31"
+        }
+      ]
+    },
+    {
+      "id": "ubuntu",
+      "name": "Ubuntu",
+      "hosts": [
+        "ubuntu.com"
+      ],
+      "link": "https://ubuntu.com/about/release-cycle",
+      "lines": [
+        {
+          "line": "22.04",
+          "released": "2022-04-21",
+          "supported_until": "2027-05-31",
+          "lts": true,
+          "note": "Expanded Security Maintenance (Ubuntu Pro) bis Mai 2032"
+        },
+        {
+          "line": "24.04",
+          "released": "2024-04-25",
+          "supported_until": "2029-05-31",
+          "lts": true,
+          "note": "Expanded Security Maintenance (Ubuntu Pro) bis Mai 2034"
+        },
+        {
+          "line": "26.04",
+          "released": "2026-04-23",
+          "supported_until": "2031-05-31",
+          "lts": true,
+          "note": "Expanded Security Maintenance (Ubuntu Pro) bis Mai 2036"
+        }
+      ]
     }
   ]
 }
