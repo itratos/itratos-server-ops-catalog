@@ -1,6 +1,6 @@
 {
-  "serial": 18,
-  "issued": "2026-11-24T08:57:26Z",
+  "serial": 19,
+  "issued": "2026-11-24T11:11:35Z",
   "purposes": [
     {
       "id": "shop",
@@ -566,13 +566,14 @@
           "version": "5.8.5",
           "date": "2026-11-24",
           "security": true,
-          "fixes": "JTL-Ankündigung 20.11.2026: behebt 3 Sicherheitslücken (hoch), betroffen 5.0.0–5.8.4; Details im JTL-Forum, sobald veröffentlicht",
+          "fixes": "JTL: mehrere Security-Fixes, u. a. CVE-2026-133938 (CSRF + XSS beim Sprachwechsel im Backend), CVE-2026-133939 (XSS im OPC-Startmenü), CVE-2026-133940 (Backup-Dateien in export/backup herunterladbar), CVE-2026-133941 (XSS in der Länderverwaltung); zeitnahes Update empfohlen",
           "links": [
             {
               "title": "Forenbeitrag",
-              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-5.249343/"
             }
-          ]
+          ],
+          "note": "Patch-Pakete von 5.8.0–5.8.4; export/backup wird per .htaccess gesperrt (nur Apache), dort abgelegte Plugin-/Template-Dateien sind danach nicht mehr direkt erreichbar"
         },
         {
           "version": "5.8.4",
@@ -639,11 +640,11 @@
           "version": "5.7.7",
           "date": "2026-11-24",
           "security": true,
-          "fixes": "JTL-Ankündigung 20.11.2026: behebt 3 Sicherheitslücken (hoch), betroffen 5.0.0–5.8.4; Details im JTL-Forum, sobald veröffentlicht",
+          "fixes": "JTL: enthält die Security-Fixes aus 5.8.5 (CVE-2026-133938 bis CVE-2026-133941)",
           "links": [
             {
               "title": "Forenbeitrag",
-              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-5.249343/"
             }
           ]
         },
@@ -704,11 +705,11 @@
           "version": "5.6.7",
           "date": "2026-11-24",
           "security": true,
-          "fixes": "JTL-Ankündigung 20.11.2026: behebt 3 Sicherheitslücken (hoch), betroffen 5.0.0–5.8.4; Details im JTL-Forum, sobald veröffentlicht",
+          "fixes": "JTL: enthält die Security-Fixes aus 5.8.5 (CVE-2026-133938 bis CVE-2026-133941)",
           "links": [
             {
               "title": "Forenbeitrag",
-              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-5.249343/"
             }
           ]
         },
@@ -776,7 +777,7 @@
           "severity": "high",
           "issues": 3,
           "source": "JTL-Newsletter vom 20.11.2026",
-          "note": "Details und Download-Links kündigt JTL für den 24.11.2026 an."
+          "note": "Veröffentlicht am 24.11.2026: 5.8.5, 5.7.7, 5.6.7, 5.5.6 mit vier CVEs (CVE-2026-133938 bis CVE-2026-133941)."
         }
       ]
     },
