@@ -1,6 +1,6 @@
 {
-  "serial": 17,
-  "issued": "2026-11-20T20:37:03Z",
+  "serial": 18,
+  "issued": "2026-11-24T08:57:26Z",
   "purposes": [
     {
       "id": "shop",
@@ -563,6 +563,18 @@
       ],
       "releases": [
         {
+          "version": "5.8.5",
+          "date": "2026-11-24",
+          "security": true,
+          "fixes": "JTL-Ankündigung 20.11.2026: behebt 3 Sicherheitslücken (hoch), betroffen 5.0.0–5.8.4; Details im JTL-Forum, sobald veröffentlicht",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+            }
+          ]
+        },
+        {
           "version": "5.8.4",
           "date": "2026-11-12",
           "security": true,
@@ -624,6 +636,18 @@
           "note": "erste Version der Reihe 5.8"
         },
         {
+          "version": "5.7.7",
+          "date": "2026-11-24",
+          "security": true,
+          "fixes": "JTL-Ankündigung 20.11.2026: behebt 3 Sicherheitslücken (hoch), betroffen 5.0.0–5.8.4; Details im JTL-Forum, sobald veröffentlicht",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+            }
+          ]
+        },
+        {
           "version": "5.7.6",
           "date": "2026-11-11",
           "security": true,
@@ -675,6 +699,18 @@
           "version": "5.7.0",
           "date": "2026-03-23",
           "note": "erste Version der Reihe 5.7"
+        },
+        {
+          "version": "5.6.7",
+          "date": "2026-11-24",
+          "security": true,
+          "fixes": "JTL-Ankündigung 20.11.2026: behebt 3 Sicherheitslücken (hoch), betroffen 5.0.0–5.8.4; Details im JTL-Forum, sobald veröffentlicht",
+          "links": [
+            {
+              "title": "Forenbeitrag",
+              "url": "https://forum.jtl-software.de/threads/jtl-shop-5-8-aktuell-5-8-4.249343/"
+            }
+          ]
         },
         {
           "version": "5.6.6",
